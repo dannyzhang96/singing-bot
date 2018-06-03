@@ -12,12 +12,12 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
+        maven { url = "https://jitpack.io" }
     }
 }
 
-group 'ichirika'
-version '1.0-SNAPSHOT'
+group = 'ichirika'
+version = '1.0-SNAPSHOT'
 
 apply plugin: 'kotlin'
 
@@ -28,7 +28,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    compile "com.github.ichi-rika:discord-base:3e40545"
+    compile "com.github.ichi-rika:discord-base:b67a914"
 }
 
 compileKotlin {
