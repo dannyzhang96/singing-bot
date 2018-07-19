@@ -1,20 +1,36 @@
 package ichirika.singing
 
-import ichirika.singing.commands.queue.QueueCommands
+import ichirika.singing.commands.queue.CloseQueue
+import ichirika.singing.commands.queue.JoinQueue
+import ichirika.singing.commands.queue.LeaveQueue
+import ichirika.singing.commands.queue.NextQueue
+import ichirika.singing.commands.queue.OpenQueue
+import ichirika.singing.commands.queue.OrderQueue
+import ichirika.singing.commands.queue.SkipQueue
+import ichirika.singing.models.SingingConfig
 import nuke.discord.bot.runBot
+import nuke.discord.command.meta.CommandContext
+import nuke.discord.command.meta.command.Command
+import nuke.discord.command.meta.selectors.PrefixSelector
 
 fun main(args: Array<String>) {
 
     runBot {
-        configName = "singingbot.cfg"
+        configName = SingingConfig.FILENAME
 
-        commands("!") {
-            it("q") {
-                it["join"] = QueueCommands.Join
-                it["leave"] = QueueCommands.Leave
-                it["show"] = QueueCommands.Show
-                it["next"] = QueueCommands.Next
-            }
+        commands("q!", PrefixSelector) {
+            it["open"] = OpenQueue
+            it["join"] = JoinQueue
+            it["leave"] = LeaveQueue
+            it["skip"] = SkipQueue
+            it["next"] = NextQueue
+            it["order"] = OrderQueue
+            it["close"] = CloseQueue
+
+            it.fallback(object : Command() {
+                override fun onInvoke(context: CommandContext) {
+                }
+            })
         }
     }
 
