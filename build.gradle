@@ -22,6 +22,8 @@ version = '1.0-SNAPSHOT'
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
+mainClassName = 'ichirika.singing.MainKt'
+
 jar {
     baseName = 'singing-bot'
     version = '1.0'
