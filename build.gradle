@@ -27,6 +27,11 @@ mainClassName = 'ichirika.singing.MainKt'
 jar {
     baseName = 'singing-bot'
     version = '1.0'
+    manifest {
+        attributes("Implementation-Title": project.name,
+                   "Implementation-Version": version,
+                   "Main-Class": mainClassName)
+    }
 }
 
 task stage(dependsOn: ['build', 'clean'])
