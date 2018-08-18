@@ -55,7 +55,7 @@ compileKotlin {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    compile "com.github.ichi-rika:discord-base:b67a914"
+    compile "com.github.ichi-rika:discord-base:f9c7a99"
 }
 
 compileKotlin {
