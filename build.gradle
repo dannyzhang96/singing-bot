@@ -3,9 +3,11 @@ buildscript {
 
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
     }
 }
 
@@ -16,16 +18,20 @@ allprojects {
     }
 }
 
-group = 'ichirika'
-version = '1.0'
-
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'kotlin'
-apply plugin: 'application'
 
-mainClassName = 'ichirika.singing.MainKt'
+shadowJar {
+    baseName = 'singingBot'
+    version = '1.0'
+
+    manifest {
+        attributes 'Main-Class': 'ichirika.singing.MainKt'
+    }
+}
 
 task stage {
-    dependsOn 'build', 'clean', 'installDist'
+    dependsOn 'build', 'clean', 'shadowJar'
 }
 
 build.mustRunAfter clean

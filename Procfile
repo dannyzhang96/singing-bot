@@ -1,1 +1,1 @@
-worker: build/install/singing-bot/bin/singing-bot
+worker: java $JAVA_OPTS -jar build/libs/singingBot-1.0-all.jar
