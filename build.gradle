@@ -24,7 +24,10 @@ apply plugin: 'application'
 
 mainClassName = 'ichirika.singing.MainKt'
 
-task stage(dependsOn: ['build', 'clean'])
+task stage {
+    dependsOn 'build', 'clean', 'installDist'
+}
+
 build.mustRunAfter clean
 
 repositories {
