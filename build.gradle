@@ -44,7 +44,7 @@ repositories {
 dependencies {
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version
 
-    compile group: 'com.github.ichi-rika', name: 'discord-base', version: '9f2e30280bf897ec9cc8e0efad27d5ded3b9ad06'
+    compile group: 'com.github.ichi-rika', name: 'discord-base', version: 'f9c7a99487a5e9e0447c4a27a49268576635acb5'
 }
 
 compileKotlin {

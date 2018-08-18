@@ -15,6 +15,8 @@ import nuke.discord.command.meta.selectors.PrefixSelector
 
 fun main(args: Array<String>) {
 
+    println(System.getenv())
+
     runBot {
         configName = SingingConfig.FILENAME
 
