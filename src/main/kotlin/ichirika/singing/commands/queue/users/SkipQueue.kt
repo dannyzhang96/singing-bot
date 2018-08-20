@@ -1,19 +1,15 @@
-package ichirika.singing.commands.queue
+package ichirika.singing.commands.queue.users
 
-import ichirika.singing.models.Queue
-import ichirika.singing.utils.checkEmpty
-import ichirika.singing.utils.checkRoles
+import ichirika.singing.commands.SCommand
 import ichirika.singing.utils.orElse
-import ichirika.singing.utils.replyIfGuild
 import nuke.discord.command.meta.CommandContext
-import nuke.discord.command.meta.command.Command
 
-object SkipQueue : Command() {
+object SkipQueue : SCommand() {
 
     override fun onInvoke(context: CommandContext) {
-        context.replyIfGuild {
+        context.replyIfLinked { queue ->
             context.checkRoles("skip a queue entry").orElse {
-                Queue.checkEmpty().orElse emptyElse@{
+                queue.checkEmpty().orElse emptyElse@{
                     val count = if (!context.tokenizer.hasMore) {
                         // skip -> skip top entry once
                         1
@@ -22,15 +18,15 @@ object SkipQueue : Command() {
                         context.tokenizer.nextInt() ?: 1
                     }
 
-                    val member = Queue.peek()!!
+                    val member = queue.peek()!!
 
-                    if (!Queue.contains(member))
+                    if (!queue.contains(member))
                         "This user is not in the queue."
-                    else if (!Queue.shift(member, count))
+                    else if (!queue.shift(member, count))
                         "You can't skip that far back."
                     else
                         """${member.asMention} has been skipped.
-                          |Next up we have ${Queue.peek()!!.asMention} !
+                          |Next up we have ${queue.peek()!!.asMention} !
 """.trimMargin("|")
                 }
             }

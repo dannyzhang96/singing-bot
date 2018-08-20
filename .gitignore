@@ -40,3 +40,4 @@ singingbot.cfg
 nukebot.log
 /build/
 /.gradle/
+!gradle-wrapper.jar

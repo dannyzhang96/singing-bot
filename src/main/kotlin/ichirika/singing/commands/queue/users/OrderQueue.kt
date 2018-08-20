@@ -1,15 +1,13 @@
-package ichirika.singing.commands.queue
+package ichirika.singing.commands.queue.users
 
-import ichirika.singing.models.Queue
-import ichirika.singing.utils.replyIfGuild
+import ichirika.singing.commands.SCommand
 import nuke.discord.command.meta.CommandContext
-import nuke.discord.command.meta.command.Command
 
-object OrderQueue : Command() {
+object OrderQueue : SCommand() {
 
     override fun onInvoke(context: CommandContext) {
-        context.replyIfGuild {
-            val list = Queue.asImmutableList()
+        context.replyIfLinked { queue ->
+            val list = queue.asImmutableList()
 
             StringBuilder().run {
                 append(":arrow_backward:         **QUEUE**         :arrow_forward:\n")
@@ -40,7 +38,7 @@ object OrderQueue : Command() {
                 }
 
                 append("\n")
-                if (Queue.open.get()) {
+                if (queue.open.get()) {
                     append(":unlock:  Queue is open.   :unlock:")
                 } else {
                     append(":lock: Queue is closed. :lock:")

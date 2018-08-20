@@ -1,12 +1,12 @@
 package ichirika.singing
 
-import ichirika.singing.commands.queue.CloseQueue
-import ichirika.singing.commands.queue.JoinQueue
-import ichirika.singing.commands.queue.LeaveQueue
-import ichirika.singing.commands.queue.NextQueue
-import ichirika.singing.commands.queue.OpenQueue
-import ichirika.singing.commands.queue.OrderQueue
-import ichirika.singing.commands.queue.SkipQueue
+import ichirika.singing.commands.queue.staff.CloseQueue
+import ichirika.singing.commands.queue.staff.OpenQueue
+import ichirika.singing.commands.queue.users.JoinQueue
+import ichirika.singing.commands.queue.users.LeaveQueue
+import ichirika.singing.commands.queue.users.NextQueue
+import ichirika.singing.commands.queue.users.OrderQueue
+import ichirika.singing.commands.queue.users.SkipQueue
 import ichirika.singing.models.SingingConfig
 import nuke.discord.bot.runBot
 import nuke.discord.command.meta.CommandContext

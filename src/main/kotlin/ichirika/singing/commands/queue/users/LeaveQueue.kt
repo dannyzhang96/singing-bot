@@ -1,15 +1,13 @@
-package ichirika.singing.commands.queue
+package ichirika.singing.commands.queue.users
 
-import ichirika.singing.models.Queue
-import ichirika.singing.utils.replyIfGuild
+import ichirika.singing.commands.SCommand
 import nuke.discord.command.meta.CommandContext
-import nuke.discord.command.meta.command.Command
 
-object LeaveQueue : Command() {
+object LeaveQueue : SCommand() {
 
     override fun onInvoke(context: CommandContext) {
-        context.replyIfGuild {
-            if (!Queue.pop(context.member))
+        context.replyIfLinked { queue ->
+            if (!queue.pop(context.member))
                 "You are already not in the queue!"
             else
                 """You have left the queue. : (

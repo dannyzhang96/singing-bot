@@ -1,18 +1,15 @@
-package ichirika.singing.commands.queue
+package ichirika.singing.commands.queue.staff
 
-import ichirika.singing.models.Queue
-import ichirika.singing.utils.checkRoles
+import ichirika.singing.commands.SCommand
 import ichirika.singing.utils.orElse
-import ichirika.singing.utils.replyIfGuild
 import nuke.discord.command.meta.CommandContext
-import nuke.discord.command.meta.command.Command
 
-object OpenQueue : Command() {
+object OpenQueue : SCommand() {
 
     override fun onInvoke(context: CommandContext) {
-        context.replyIfGuild {
+        context.replyIfLinked { queue ->
             context.checkRoles("open the queue").orElse {
-                if (Queue.open.compareAndSet(false, true))
+                if (queue.open.compareAndSet(false, true))
                     """The queue is now open.
                       |Please type "q! join" to secure your spot before it closes again!
 """.trimMargin("|")

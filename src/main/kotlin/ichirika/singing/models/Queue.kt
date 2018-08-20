@@ -4,7 +4,7 @@ import net.dv8tion.jda.core.entities.Member
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
-object Queue {
+class Queue {
 
     private val queue = LinkedList<Member>()
 
