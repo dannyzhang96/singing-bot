@@ -1,6 +1,7 @@
 package ichirika.singing
 
 import ichirika.singing.commands.queue.staff.CloseQueue
+import ichirika.singing.commands.queue.staff.LinkQueue
 import ichirika.singing.commands.queue.staff.OpenQueue
 import ichirika.singing.commands.queue.users.JoinQueue
 import ichirika.singing.commands.queue.users.LeaveQueue
@@ -21,13 +22,16 @@ fun main(args: Array<String>) {
         configName = SingingConfig.FILENAME
 
         commands("q!", PrefixSelector) {
-            it["open"] = OpenQueue
             it["join"] = JoinQueue
             it["leave"] = LeaveQueue
+            it["order"] = OrderQueue
+            
             it["skip"] = SkipQueue
             it["next"] = NextQueue
-            it["order"] = OrderQueue
+
+            it["open"] = OpenQueue
             it["close"] = CloseQueue
+            it["link"] = LinkQueue
 
             it.fallback(object : Command() {
                 override fun onInvoke(context: CommandContext) {

@@ -4,7 +4,6 @@ import com.thatsnomoon.kda.extensions.reply
 import ichirika.singing.models.Queue
 import ichirika.singing.models.QueueGuildStore
 import ichirika.singing.models.SingingConfig
-import net.dv8tion.jda.core.MessageBuilder
 import net.dv8tion.jda.core.Permission
 import nuke.discord.command.meta.CommandContext
 import nuke.discord.command.meta.command.Command
@@ -17,10 +16,12 @@ abstract class SCommand(
         requiredPermission: PermLevel = PermLevel.USER
 ) : Command(requiredPermission) {
 
-    fun CommandContext.replyIfLinked(block: MessageBuilder.(Queue) -> Unit) {
+    val CommandContext.channelStore get() = QueueGuildStore[guild]
+
+    fun CommandContext.replyIfLinked(block: (Queue) -> String) {
         synchronized(QueueGuildStore) {
-            QueueGuildStore[guild][message.textChannel]?.let { queue ->
-                message.reply { block(queue) }
+            channelStore[message.textChannel]?.let { queue ->
+                message.reply { append(block(queue)) }
             }
         }
     }

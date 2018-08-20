@@ -55,11 +55,11 @@ class QueueChannelStore {
 
     fun unlink(text: TextChannel, voice: VoiceChannel) =
             channelsByText[text]
-                ?.takeIf { it.voice == voice }
-                ?.let {
-                    channelsByText.remove(text)
-                    channelsByVoice.remove(voice)
-                    true
-                } ?: false
+                    ?.takeIf { it.voice == voice }
+                    ?.let {
+                        channelsByText.remove(text)
+                        channelsByVoice.remove(voice)
+                        true
+                    } ?: false
 
 }
