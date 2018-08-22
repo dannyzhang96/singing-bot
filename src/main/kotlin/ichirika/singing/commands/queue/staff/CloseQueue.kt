@@ -8,7 +8,7 @@ object CloseQueue : SCommand() {
 
     override fun onInvoke(context: CommandContext) {
         context.replyIfLinked { queue ->
-            context.checkRoles("close the queue").orElse {
+            context.ifStaff("close the queue").orElse {
                 if (queue.open.compareAndSet(true, false))
                     "The queue is now closed. : ("
                 else

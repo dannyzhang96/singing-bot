@@ -18,19 +18,27 @@ abstract class SCommand(
 
     val CommandContext.channelStore get() = QueueGuildStore[guild]
 
+    val CommandContext.queue get() = channelStore[message.textChannel]
+
     fun CommandContext.replyIfLinked(block: (Queue) -> String) {
         synchronized(QueueGuildStore) {
-            channelStore[message.textChannel]?.let { queue ->
-                message.reply { append(block(queue)) }
+            queue?.let {
+                message.reply { append(block(it)) }
             }
         }
     }
 
-    fun CommandContext.checkRoles(action: String = "do this command") = when {
+    fun CommandContext.ifStaff(action: String = "do this command") = when {
         SingingConfig.roles.any(member::hasRoleForGuild)
                 || member.hasPermission(Permission.MANAGE_SERVER) -> null
         else -> "Only staff members are allowed to $action."
     }
+
+    fun CommandContext.ifStaffOrFirst(action: String = "do this command") =
+            ifStaff(action)?.let {
+                if (queue?.peek() == member) null
+                else it
+            }
 
     fun Queue.checkEmpty() =
             if (count() > 0) null

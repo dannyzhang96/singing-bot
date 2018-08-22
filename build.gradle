@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.2.60'
+    ext.kotlin_version = '1.2.61'
 
     repositories {
         mavenCentral()
@@ -38,6 +38,7 @@ build.mustRunAfter clean
 
 repositories {
     mavenCentral()
+    maven { url = "https://dl.bintray.com/kotlin/exposed" }
     maven { url = "https://jitpack.io" }
 }
 
@@ -62,6 +63,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     compile "com.github.ichi-rika:discord-base:f9c7a99"
+    compile 'org.jetbrains.exposed:exposed:0.10.4'
+    compile "mysql:mysql-connector-java:5.1.46"
 }
 
 compileKotlin {

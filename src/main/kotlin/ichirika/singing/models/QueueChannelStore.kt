@@ -3,10 +3,13 @@ package ichirika.singing.models
 import ichirika.singing.models.QueueChannelStore.OpResult.ALL_CLEAR
 import ichirika.singing.models.QueueChannelStore.OpResult.TEXT_ALREADY_LINKED
 import ichirika.singing.models.QueueChannelStore.OpResult.VOICE_ALREADY_LINKED
+import net.dv8tion.jda.core.JDA
+import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.TextChannel
 import net.dv8tion.jda.core.entities.VoiceChannel
+import org.jetbrains.exposed.sql.transactions.transaction
 
-class QueueChannelStore {
+class QueueChannelStore(val guild: Guild) {
 
     object OpResult {
         const val ALL_CLEAR = 0b00
@@ -28,38 +31,57 @@ class QueueChannelStore {
     operator fun contains(text: TextChannel) = text in channelsByText
     operator fun contains(voice: VoiceChannel) = voice in channelsByVoice
 
+    fun init(client: JDA) {
+        QueueStore.listChannels(client, guild).forEach { (text, voice) ->
+            Entry(text, voice, Queue()).let {
+                channelsByText[text] = it
+                channelsByVoice[voice] = it
+            }
+        }
+    }
+
     /** Link a queue to a text and voice channel, returns OpResult */
     fun link(text: TextChannel, voice: VoiceChannel): Int {
         var result = ALL_CLEAR
 
-        if (text in channelsByText) {
-            result = (result or TEXT_ALREADY_LINKED)
-            channelsByText.remove(text)?.voice?.let(channelsByVoice::remove)
-        }
+        transaction {
+            if (text in channelsByText) {
+                result = (result or TEXT_ALREADY_LINKED)
+                unlink(text)
+            }
 
-        if (voice in channelsByVoice) {
-            result = (result or VOICE_ALREADY_LINKED)
-            channelsByVoice.remove(voice)?.text?.let(channelsByText::remove)
-        }
+            if (voice in channelsByVoice) {
+                result = (result or VOICE_ALREADY_LINKED)
+                unlink(voice)
+            }
 
-        Entry(text, voice, Queue()).let {
-            channelsByText[text] = it
-            channelsByVoice[voice] = it
+            Entry(text, voice, Queue()).let {
+                channelsByText[text] = it
+                channelsByVoice[voice] = it
+
+                QueueStore.insert(guild, text, voice)
+            }
         }
 
         return result
     }
 
     fun unlink(text: TextChannel) = channelsByText[text]?.let { unlink(text, it.voice) }
-    fun unlink(voice: VoiceChannel) = channelsByVoice[voice]?.let { unlink(it.text, voice) }
+            ?: false
 
-    fun unlink(text: TextChannel, voice: VoiceChannel) =
-            channelsByText[text]
-                    ?.takeIf { it.voice == voice }
-                    ?.let {
-                        channelsByText.remove(text)
-                        channelsByVoice.remove(voice)
-                        true
-                    } ?: false
+    fun unlink(voice: VoiceChannel) = channelsByVoice[voice]?.let { unlink(it.text, voice) }
+            ?: false
+
+    private fun unlink(text: TextChannel, voice: VoiceChannel) = transaction {
+        channelsByText[text]
+                ?.takeIf { it.voice == voice }
+                ?.let {
+                    channelsByText.remove(text)
+                    channelsByVoice.remove(voice)
+
+                    QueueStore.delete(guild, text, voice)
+                    true
+                } ?: false
+    }
 
 }

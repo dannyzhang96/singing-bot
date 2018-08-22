@@ -8,7 +8,7 @@ object SkipQueue : SCommand() {
 
     override fun onInvoke(context: CommandContext) {
         context.replyIfLinked { queue ->
-            context.checkRoles("skip a queue entry").orElse {
+            context.ifStaffOrFirst("skip a queue entry").orElse {
                 queue.checkEmpty().orElse emptyElse@{
                     val count = if (!context.tokenizer.hasMore) {
                         // skip -> skip top entry once

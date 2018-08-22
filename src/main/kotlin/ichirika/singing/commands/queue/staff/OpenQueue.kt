@@ -8,7 +8,7 @@ object OpenQueue : SCommand() {
 
     override fun onInvoke(context: CommandContext) {
         context.replyIfLinked { queue ->
-            context.checkRoles("open the queue").orElse {
+            context.ifStaff("open the queue").orElse {
                 if (queue.open.compareAndSet(false, true))
                     """The queue is now open.
                       |Please type "q! join" to secure your spot before it closes again!

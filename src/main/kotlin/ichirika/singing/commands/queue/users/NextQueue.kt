@@ -8,7 +8,7 @@ object NextQueue : SCommand() {
 
     override fun onInvoke(context: CommandContext) {
         context.replyIfLinked { queue ->
-            context.checkRoles("next the queue").orElse {
+            context.ifStaffOrFirst("next the queue").orElse {
                 queue.checkEmpty().orElse {
                     val prevTop = queue.peek()!!.also { queue.pop() }
 

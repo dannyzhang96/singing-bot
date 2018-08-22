@@ -10,7 +10,7 @@ object LinkQueue : SCommand() {
 
     override fun onInvoke(context: CommandContext) {
         context.message.reply {
-            append(context.checkRoles("link the queue").orElse {
+            append(context.ifStaff("link the queue").orElse {
                 val text = context.message.textChannel
                 val voice = context.member.voiceState.channel
 
