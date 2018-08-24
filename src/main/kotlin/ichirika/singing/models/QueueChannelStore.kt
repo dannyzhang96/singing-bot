@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.entities.TextChannel
 import net.dv8tion.jda.core.entities.VoiceChannel
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class QueueChannelStore(val guild: Guild) {
+class QueueChannelStore(private val guild: Guild) {
 
     object OpResult {
         const val ALL_CLEAR = 0b00

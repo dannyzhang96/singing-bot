@@ -9,11 +9,9 @@ object SingingConfig {
 
     private val config = Config(FILENAME)
 
-    val guild = config["guild_id"]
     val roles = config["role_ids"].split(';').map(String::toLong)
 
-    val dbUrl = config["jdbc_url"]
-    val dbUsername = config["jdbc_username"]
-    val dbPassword = config["jdbc_password"]
+    val dbConnectionUrl = config["database_url"]
+
 
 }

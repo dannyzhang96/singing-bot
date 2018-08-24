@@ -1,11 +1,15 @@
 package ichirika.singing.commands.queue.staff
 
 import com.thatsnomoon.kda.extensions.reply
-import ichirika.singing.commands.SCommand
+import ichirika.singing.utils.channelStore
+import ichirika.singing.utils.ifStaff
 import ichirika.singing.utils.orElse
 import nuke.discord.command.meta.CommandContext
+import nuke.discord.command.meta.command.Command
 
-object UnlinkQueue : SCommand() {
+object UnlinkQueue : Command(
+        description = "Unlinks the queue from its text and voice channels if possible. Used by staff."
+) {
 
     override fun onInvoke(context: CommandContext) {
         context.message.reply {

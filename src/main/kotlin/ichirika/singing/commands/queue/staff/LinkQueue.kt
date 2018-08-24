@@ -1,12 +1,16 @@
 package ichirika.singing.commands.queue.staff
 
 import com.thatsnomoon.kda.extensions.reply
-import ichirika.singing.commands.SCommand
 import ichirika.singing.models.QueueChannelStore.OpResult
+import ichirika.singing.utils.channelStore
+import ichirika.singing.utils.ifStaff
 import ichirika.singing.utils.orElse
 import nuke.discord.command.meta.CommandContext
+import nuke.discord.command.meta.command.Command
 
-object LinkQueue : SCommand() {
+object LinkQueue : Command(
+        description = "Links a new queue to a pair of text and voice channels. You need to be connected to said voice channel. Used by staff."
+) {
 
     override fun onInvoke(context: CommandContext) {
         context.message.reply {

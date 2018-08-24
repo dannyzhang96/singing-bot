@@ -42,12 +42,6 @@ repositories {
     maven { url = "https://jitpack.io" }
 }
 
-dependencies {
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version
-
-    compile group: 'com.github.ichi-rika', name: 'discord-base', version: 'f9c7a99487a5e9e0447c4a27a49268576635acb5'
-}
-
 compileKotlin {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -62,9 +56,10 @@ compileKotlin {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    compile "com.github.ichi-rika:discord-base:f9c7a99"
+    compile "com.github.ichi-rika:discord-base:0965c2"
+
     compile 'org.jetbrains.exposed:exposed:0.10.4'
-    compile "mysql:mysql-connector-java:5.1.46"
+    compile "org.postgresql:postgresql:42.2.4"
 }
 
 compileKotlin {

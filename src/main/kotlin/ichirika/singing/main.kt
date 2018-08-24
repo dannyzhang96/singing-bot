@@ -20,16 +20,26 @@ import nuke.discord.command.meta.command.Command
 import nuke.discord.command.meta.selectors.PrefixSelector
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils.create
+import org.jetbrains.exposed.sql.transactions.DEFAULT_ISOLATION_LEVEL
+import org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.net.URI
+import java.sql.DriverManager
+
+
 
 fun main(args: Array<String>) {
 
-    Database.connect(
-            url = SingingConfig.dbUrl,
-            user = SingingConfig.dbUsername,
-            password = SingingConfig.dbPassword,
-            driver = SingingConfig.DB_DRIVER
-    )
+    Database.connect(getNewConnection = {
+        val dbUri = URI(SingingConfig.dbConnectionUrl)
+
+        val (username, password) = dbUri.userInfo.split(":")
+        val dbUrl = "jdbc:postgresql://" + dbUri.host + ':' + dbUri.port + dbUri.path
+
+        DriverManager.getConnection(dbUrl, username, password)
+    }, manager = {
+        ThreadLocalTransactionManager(it, DEFAULT_ISOLATION_LEVEL)
+    })
 
     transaction {
         create(QueueStore)

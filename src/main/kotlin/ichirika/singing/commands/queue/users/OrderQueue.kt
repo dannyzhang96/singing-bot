@@ -1,9 +1,12 @@
 package ichirika.singing.commands.queue.users
 
-import ichirika.singing.commands.SCommand
+import ichirika.singing.utils.replyIfLinked
 import nuke.discord.command.meta.CommandContext
+import nuke.discord.command.meta.command.Command
 
-object OrderQueue : SCommand() {
+object OrderQueue : Command(
+        description = "Shows the current state of the queue."
+) {
 
     override fun onInvoke(context: CommandContext) {
         context.replyIfLinked { queue ->

@@ -1,10 +1,14 @@
 package ichirika.singing.commands.queue.staff
 
-import ichirika.singing.commands.SCommand
+import ichirika.singing.utils.ifStaff
 import ichirika.singing.utils.orElse
+import ichirika.singing.utils.replyIfLinked
 import nuke.discord.command.meta.CommandContext
+import nuke.discord.command.meta.command.Command
 
-object CloseQueue : SCommand() {
+object CloseQueue : Command(
+        description = "Closes the queue from being entered. Used by staff."
+) {
 
     override fun onInvoke(context: CommandContext) {
         context.replyIfLinked { queue ->

@@ -1,10 +1,15 @@
 package ichirika.singing.commands.queue.users
 
-import ichirika.singing.commands.SCommand
+import ichirika.singing.utils.checkEmpty
+import ichirika.singing.utils.ifStaffOrFirst
 import ichirika.singing.utils.orElse
+import ichirika.singing.utils.replyIfLinked
 import nuke.discord.command.meta.CommandContext
+import nuke.discord.command.meta.command.Command
 
-object SkipQueue : SCommand() {
+object SkipQueue : Command(
+        description = "Skips the top entry, moving it back into the queue, possibly by multiple places. Used by the member on top of the queue."
+) {
 
     override fun onInvoke(context: CommandContext) {
         context.replyIfLinked { queue ->
