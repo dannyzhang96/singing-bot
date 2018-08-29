@@ -4,6 +4,7 @@ import ichirika.singing.commands.queue.staff.ClearQueue
 import ichirika.singing.commands.queue.staff.CloseQueue
 import ichirika.singing.commands.queue.staff.LinkQueue
 import ichirika.singing.commands.queue.staff.OpenQueue
+import ichirika.singing.commands.queue.staff.RemoveQueue
 import ichirika.singing.commands.queue.staff.UnlinkQueue
 import ichirika.singing.commands.queue.users.JoinQueue
 import ichirika.singing.commands.queue.users.LeaveQueue
@@ -57,6 +58,7 @@ fun main(args: Array<String>) {
             it["skip"] = SkipQueue
             it["next"] = NextQueue
             it["clear"] = ClearQueue
+            it["remove"] = RemoveQueue
 
             it["open"] = OpenQueue
             it["close"] = CloseQueue
