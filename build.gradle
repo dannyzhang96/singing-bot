@@ -56,7 +56,7 @@ compileKotlin {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    compile "com.github.ichi-rika:discord-base:0965c2"
+    compile "com.github.ichi-rika:discord-base:553bc11ff82b84f3903250b3c774479d3a84fd1c"
 
     compile 'org.jetbrains.exposed:exposed:0.10.4'
     compile "org.postgresql:postgresql:42.2.4"

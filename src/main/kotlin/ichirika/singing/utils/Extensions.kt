@@ -28,11 +28,12 @@ fun CommandContext.ifStaff(action: String = "do this command") = when {
     else -> "Only staff members are allowed to $action."
 }
 
-fun CommandContext.ifStaffOrFirst(action: String = "do this command") =
-        ifStaff(action)?.let {
-            if (queue?.peek() == member) null
-            else it
-        }
+fun CommandContext.ifStaffOrFirst(action: String = "do this command") = when {
+    queue?.peek() == member -> null
+    SingingConfig.roles.any(member::hasRoleForGuild)
+            || member.hasPermission(Permission.MANAGE_SERVER) -> null
+    else -> "Only the member on top of the queue is allowed to $action."
+}
 
 fun Queue.checkEmpty() =
         if (count() > 0) null

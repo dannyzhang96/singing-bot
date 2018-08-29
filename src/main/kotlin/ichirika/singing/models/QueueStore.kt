@@ -8,6 +8,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.or
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 
@@ -30,8 +31,8 @@ object QueueStore : Table(name = "queue_store") {
     fun delete(guild: Guild, text: TextChannel, voice: VoiceChannel) {
         QueueStore.deleteWhere {
             (QueueStore.guildId eq guild.idLong) and
-                    (QueueStore.textId eq text.idLong) and
-                    (QueueStore.voiceId eq voice.idLong)
+                    ((QueueStore.textId eq text.idLong) or
+                            (QueueStore.voiceId eq voice.idLong))
         }
     }
 

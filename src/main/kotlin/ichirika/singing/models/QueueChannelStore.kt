@@ -44,21 +44,21 @@ class QueueChannelStore(private val guild: Guild) {
     fun link(text: TextChannel, voice: VoiceChannel): Int {
         var result = ALL_CLEAR
 
-        transaction {
-            if (text in channelsByText) {
-                result = (result or TEXT_ALREADY_LINKED)
-                unlink(text)
-            }
+        if (text in channelsByText) {
+            result = (result or TEXT_ALREADY_LINKED)
+            unlink(text)
+        }
 
-            if (voice in channelsByVoice) {
-                result = (result or VOICE_ALREADY_LINKED)
-                unlink(voice)
-            }
+        if (voice in channelsByVoice) {
+            result = (result or VOICE_ALREADY_LINKED)
+            unlink(voice)
+        }
 
-            Entry(text, voice, Queue()).let {
-                channelsByText[text] = it
-                channelsByVoice[voice] = it
+        Entry(text, voice, Queue()).let {
+            channelsByText[text] = it
+            channelsByVoice[voice] = it
 
+            transaction {
                 QueueStore.insert(guild, text, voice)
             }
         }

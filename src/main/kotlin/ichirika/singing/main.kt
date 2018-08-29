@@ -26,8 +26,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.net.URI
 import java.sql.DriverManager
 
-
-
 fun main(args: Array<String>) {
 
     Database.connect(getNewConnection = {
@@ -48,7 +46,7 @@ fun main(args: Array<String>) {
     runBot {
         configName = SingingConfig.FILENAME
 
-        commands("q!", PrefixSelector) {
+        commands("q!", PrefixSelector.CaseInsensitive) {
             it["join"] = JoinQueue
             it["leave"] = LeaveQueue
             it["order"] = OrderQueue
@@ -62,6 +60,7 @@ fun main(args: Array<String>) {
             it["link"] = LinkQueue
             it["unlink"] = UnlinkQueue
 
+            it.registerHelp("help")
             it.fallback(object : Command() {
                 override fun onInvoke(context: CommandContext) {
                 }
