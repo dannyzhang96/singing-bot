@@ -8,6 +8,7 @@ import ichirika.singing.commands.queue.users.JoinQueue
 import ichirika.singing.commands.queue.users.LeaveQueue
 import ichirika.singing.commands.queue.users.NextQueue
 import ichirika.singing.commands.queue.users.OrderQueue
+import ichirika.singing.commands.queue.users.RejoinQueue
 import ichirika.singing.commands.queue.users.SkipQueue
 import ichirika.singing.models.QueueGuildStore
 import ichirika.singing.models.QueueStore
@@ -49,6 +50,7 @@ fun main(args: Array<String>) {
         commands("q!", PrefixSelector.CaseInsensitive) {
             it["join"] = JoinQueue
             it["leave"] = LeaveQueue
+            it["rejoin"] = RejoinQueue
             it["order"] = OrderQueue
 
             it["skip"] = SkipQueue
