@@ -22,17 +22,19 @@ object MentionRole : Command(
             if (role.isMentionable) {
                 context.mention(role)
             } else {
-                role.manager.setMentionable(true)
-                context.mention(role)
-                role.manager.setMentionable(false)
+                role.manager.setMentionable(true).queue {
+                    context.mention(role).queue { _ ->
+                        role.manager.setMentionable(false).queue()
+                    }
+                }
             }
         }
     }
 
     @Suppress("NOTHING_TO_INLINE")
-    private inline fun CommandContext.mention(role: Role) {
-        channel.sendMessage(role.asMention)
-        message.delete()
-    }
+    private inline fun CommandContext.mention(role: Role) =
+            channel.sendMessage(role.asMention).also {
+                message.delete().queue()
+            }
 
 }
