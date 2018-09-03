@@ -12,6 +12,7 @@ import ichirika.singing.commands.queue.users.NextQueue
 import ichirika.singing.commands.queue.users.OrderQueue
 import ichirika.singing.commands.queue.users.RejoinQueue
 import ichirika.singing.commands.queue.users.SkipQueue
+import ichirika.singing.commands.staff.MentionRole
 import ichirika.singing.models.QueueGuildStore
 import ichirika.singing.models.QueueStore
 import ichirika.singing.models.SingingConfig
@@ -65,6 +66,8 @@ fun main(args: Array<String>) {
 
             it["link"] = LinkQueue
             it["unlink"] = UnlinkQueue
+
+            it["menro"] = MentionRole
 
             it.registerHelp("help")
             it.fallback(object : Command() {
