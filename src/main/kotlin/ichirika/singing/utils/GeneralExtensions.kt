@@ -6,8 +6,11 @@ fun <T> T?.orElse(b: () -> T): T = this ?: b()
 
 fun <T> List<T>.findClosestMatch(match: String, transform: (T) -> String): T? =
         stream().map { it to transform(it) }
-                .filter { it.second.contains(match) } // it needs to contain the match
+                // it needs to contain the match
+                .filter { it.second.contains(match, ignoreCase = true) }
+                // sort by "closeness"
                 .sorted(Comparator.comparingInt {
-                    it.second.length - match.length // sort by "closeness"
+                    it.second.length - match.length
                 })
-                .findFirst().orElse(null)?.first // original key
+                // original key
+                .findFirst().orElse(null)?.first
