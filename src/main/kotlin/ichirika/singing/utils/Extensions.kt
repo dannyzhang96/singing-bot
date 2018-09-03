@@ -22,13 +22,13 @@ fun CommandContext.replyIfLinked(block: (Queue) -> String) {
     }
 }
 
-fun CommandContext.ifStaff(action: String = "do this command") = when {
+fun CommandContext.nullIfStaff(action: String = "do this command") = when {
     SingingConfig.roles.any(member::hasRoleForGuild)
             || member.hasPermission(Permission.MANAGE_SERVER) -> null
     else -> "Only staff members are allowed to $action."
 }
 
-fun CommandContext.ifStaffOrFirst(action: String = "do this command") = when {
+fun CommandContext.nullIfStaffOrFirst(action: String = "do this command") = when {
     queue?.peek() == member -> null
     SingingConfig.roles.any(member::hasRoleForGuild)
             || member.hasPermission(Permission.MANAGE_SERVER) -> null

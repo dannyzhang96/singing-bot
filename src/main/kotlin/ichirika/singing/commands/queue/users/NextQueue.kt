@@ -1,7 +1,7 @@
 package ichirika.singing.commands.queue.users
 
 import ichirika.singing.utils.checkEmpty
-import ichirika.singing.utils.ifStaffOrFirst
+import ichirika.singing.utils.nullIfStaffOrFirst
 import ichirika.singing.utils.orElse
 import ichirika.singing.utils.replyIfLinked
 import nuke.discord.command.meta.CommandContext
@@ -13,7 +13,7 @@ object NextQueue : Command(
 
     override fun onInvoke(context: CommandContext) {
         context.replyIfLinked { queue ->
-            context.ifStaffOrFirst("next the queue").orElse {
+            context.nullIfStaffOrFirst("next the queue").orElse {
                 queue.checkEmpty().orElse {
                     val prevTop = queue.peek()!!.also { queue.pop() }
 

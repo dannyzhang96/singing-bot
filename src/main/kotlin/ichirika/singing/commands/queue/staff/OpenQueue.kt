@@ -1,6 +1,6 @@
 package ichirika.singing.commands.queue.staff
 
-import ichirika.singing.utils.ifStaff
+import ichirika.singing.utils.nullIfStaff
 import ichirika.singing.utils.orElse
 import ichirika.singing.utils.replyIfLinked
 import nuke.discord.command.meta.CommandContext
@@ -12,7 +12,7 @@ object OpenQueue : Command(
 
     override fun onInvoke(context: CommandContext) {
         context.replyIfLinked { queue ->
-            context.ifStaff("open the queue").orElse {
+            context.nullIfStaff("open the queue").orElse {
                 if (queue.open.compareAndSet(false, true))
                     """The queue is now open.
                       |Please type "q! join" to secure your spot before it closes again!

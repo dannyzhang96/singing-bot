@@ -3,7 +3,7 @@ package ichirika.singing.commands.queue.staff
 import com.thatsnomoon.kda.extensions.reply
 import ichirika.singing.models.QueueChannelStore.OpResult
 import ichirika.singing.utils.channelStore
-import ichirika.singing.utils.ifStaff
+import ichirika.singing.utils.nullIfStaff
 import ichirika.singing.utils.orElse
 import nuke.discord.command.meta.CommandContext
 import nuke.discord.command.meta.command.Command
@@ -14,7 +14,7 @@ object LinkQueue : Command(
 
     override fun onInvoke(context: CommandContext) {
         context.message.reply {
-            append(context.ifStaff("link the queue").orElse {
+            append(context.nullIfStaff("link the queue").orElse {
                 val text = context.message.textChannel
                 val voice = context.member.voiceState.channel
 
