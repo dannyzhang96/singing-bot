@@ -8,31 +8,6 @@ The command prefix is q!
 Example: `q!join`
 
 ------
-The bot is currently hosted on my personal desktop computer, so it will only be running when my computer is.
+The bot is hosted on Heroku.
 
-------
-Staff commands:
-
-`open`
-    This command is used by staff or interns to open up the queue to enter.
-
-`close`
-    This command is used by staff or interns to close off the queue from entering.
-
-`skip [number]`
-    This command is used by staff or interns to skip the top member back into the queue when they are having some inconveniences.
-
-`next`
-    This command is used by staff or interns to move on to the next member in the queue.
-
-------
-Normal commands:
-
-`join`
-    This command is used by members who wish to be added to the queue.
-
-`leave`
-    This command is used by members who wish to be removed from the queue.
-
-`order`
-    This command is used by members to show the current queue and status.
+Command list with `q!help`
